@@ -1,0 +1,132 @@
+# add_newline = false
+command_timeout = 5000
+
+[character] 
+# success_symbol = "[✗](bold yellow)" 
+# error_symbol = "[✗](bold red)"
+success_symbol = "[➜](bold yellow)" 
+error_symbol = "[➜](bold red)"
+
+[container]
+disabled = true
+
+# [battery]
+# full_symbol = "⚡ "
+# unknown_symbol = "⚡ "
+# charging_symbol = "⚡ "
+# discharging_symbol = "💀 "
+# # disabled = false
+
+# [[battery.display]]
+# threshold = 100
+# style = "white"
+
+[cmd_duration]
+min_time = 2_000
+format = " took [$duration]($style)"
+
+[aws]
+symbol = "  "
+
+[c]
+symbol = " "
+
+[directory]
+style = "bold 43"
+read_only = " "
+truncation_length = 1
+
+[docker_context]
+symbol = " "
+
+[golang]
+symbol = " "
+format = 'via [$symbol]($style)'
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+format = 'via [$symbol]($style)'
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+# symbol = " "
+symbol = "node "
+format = 'via [$symbol($version )]($style)'
+
+[package]
+# symbol = " "
+symbol = "pkg "
+
+[php]
+symbol = " "
+
+[python]
+# symbol = " "
+symbol = "py "
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[ruby]
+# symbol = " "
+symbol = "ruby "
+format = "via [$symbol($version )]($style)"
+
+[rust]
+symbol = "🦀 "
+format = "via [$symbol($version )]($style)"
+
+[bun]
+symbol = "🍞 "
+format = "via [$symbol($version )]($style)"
+
+
+[git_branch]
+symbol = ""
+style = "bold 35"
+# style = "bold 105"
+# symbol = " "
+
+# [git_commit]
+# commit_hash_length = 8
+# style = "bold white"
+
+[git_metrics]
+added_style = 'bold blue'
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+
+[git_status]
+up_to_date = "✓"
+ahead = '⇡${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+behind = '⇣${count}'
+untracked = "?"
+style = "bold 35"
+# conflicted = "⚔️"
+# ahead = "⇡"
+# behind = "🐢"
+# diverged = "🔱"
+# stashed = "📦"
+# #modified = "!"
+# staged = "🗃️"
+# renamed = "📛"
+# deleted = "🗑️"
+# format = "$all_status$ahead_behind"
+# disabled = true
+
+
+# [time]
+# time_format = "%a, %b %d, %Y | %I:%M%P ️"
+# time_format = "%a, %I:%M%P"
+# format = "$time($style) "
+# style = "bright-white"
+# disabled = false
