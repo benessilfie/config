@@ -13,10 +13,10 @@ return {
         lualine_z = { "location" },
       },
       options = {
-        theme = 'auto',
-        component_separators = { right = '', left = '' },
-        section_separators = { right = '', left = '' },
-      }
+        theme = "auto",
+        component_separators = { right = "", left = "" },
+        section_separators = { right = "", left = "" },
+      },
     })
-  end
+  end,
 }
