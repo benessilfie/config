@@ -68,7 +68,7 @@ require("lazy").setup({
             auto_trigger = true,
           },
           filetypes = { markdown = true },
-        })                         -- https://github.com/zbirenbaum/copilot.lua/blob/master/README.md#setup-and-configuration
+        })                             -- https://github.com/zbirenbaum/copilot.lua/blob/master/README.md#setup-and-configuration
         require("copilot_cmp").setup() -- https://github.com/zbirenbaum/copilot-cmp/blob/master/README.md#configuration
       end, 100)
     end,
@@ -215,4 +215,5 @@ require("lazy").setup({
   require("ben.plugins.numb"),
   require("ben.plugins.none-ls"),
   require("ben.plugins.lazygit"),
+  require("ben.plugins.alpha"),
 }, {})
