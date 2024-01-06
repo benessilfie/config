@@ -1,0 +1,6 @@
+require("config.keymaps")
+require("config.options")
+require("config.autocmds")
+require("config.abbreviations")
+require("config.tmux")
+require("config.lazy")
