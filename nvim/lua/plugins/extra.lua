@@ -178,7 +178,9 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     -- See `:help ibl`
     main = "ibl",
-    opts = {},
+    opts = {
+      exclude = { buftypes = { "NeoTree" } },
+    },
   },
   "editorconfig/editorconfig-vim",
   {
