@@ -38,7 +38,7 @@ return {
                 rangeVariableTypes = false,
               },
               analyses = {
-                fieldalignment = true,
+                fieldalignment = false,
                 nilness = true,
                 unusedparams = true,
                 unusedwrite = true,
@@ -56,7 +56,7 @@ return {
       })
     end,
     event = { "CmdlineEnter" },
-    ft = { "go", "gomod" },
+    ft = { "go", "gomod", "gowork", "gotmpl", "tmpl" },
     build = ':lua require("go.install").update_all_sync()',
   },
 }
