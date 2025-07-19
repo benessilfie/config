@@ -1,69 +1,98 @@
 return {
-  "nvim-lualine/lualine.nvim",
-  dependencies = {
-    "meuter/lualine-so-fancy.nvim",
-  },
-  enabled = true,
-  lazy = false,
-  event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+  'nvim-lualine/lualine.nvim',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
-    local icons = require("config.icons")
-    require("lualine").setup({
+    -- Helper function for LSP status
+    local function lsp_status()
+      local clients = vim.lsp.get_clients { bufnr = 0 }
+      if #clients == 0 then
+        return 'No LSP'
+      end
+
+      local names = {}
+      for _, client in ipairs(clients) do
+        table.insert(names, client.name)
+      end
+      return table.concat(names, ', ')
+    end
+
+    require('lualine').setup {
       options = {
-        theme = "catppuccin",
+        theme = 'auto',
+        component_separators = { left = '|', right = '|' },
+        section_separators = { left = '', right = '' },
         globalstatus = true,
-        icons_enabled = true,
-        -- component_separators = { left = "│", right = "│" },
-        component_separators = { left = icons.ui.DividerRight, right = icons.ui.DividerLeft },
-        section_separators = { left = "", right = "" },
         disabled_filetypes = {
-          statusline = {
-            "alfa-nvim",
-            "help",
-            "neo-tree",
-            "Trouble",
-            "spectre_panel",
-            "toggleterm",
-          },
-          winbar = {},
+          statusline = { 'dashboard', 'alpha', 'starter' },
         },
       },
       sections = {
-        lualine_a = {},
+        lualine_a = {
+          {
+            'mode',
+            fmt = function(str)
+              return str:sub(1, 1) -- Show only first character
+            end,
+          },
+        },
         lualine_b = {
-          "fancy_branch",
+          'branch',
+          {
+            'diff',
+            symbols = { added = ' ', modified = ' ', removed = ' ' },
+          },
+          {
+            'diagnostics',
+            symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+          },
         },
         lualine_c = {
           {
-            "filename",
-            path = 1, -- 2 for full path
+            'filename',
+            path = 0, -- 0: just filename, 1: relative path, 2: absolute path
+            shorting_target = 40,
             symbols = {
-              modified = "  ",
-              -- readonly = "  ",
-              -- unnamed = "  ",
+              modified = '[+]',
+              readonly = '[-]',
+              unnamed = '[No Name]',
             },
           },
-          { "fancy_diagnostics", sources = { "nvim_lsp" }, symbols = { error = " ", warn = " ", info = " " } },
-          { "fancy_searchcount" },
         },
         lualine_x = {
-          "fancy_lsp_servers",
-          "fancy_diff",
-          "progress",
+          {
+            lsp_status,
+            -- icon = ' LSP:',
+            -- color = { fg = '#ffffff', gui = 'bold' },
+          },
+          -- 'encoding',
+          {
+            'fileformat',
+            symbols = {
+              unix = '', -- or 'LF'
+              dos = '', -- or 'CRLF'
+              mac = '', -- or 'CR'
+            },
+          },
+          'filetype',
         },
-        lualine_y = {},
-        lualine_z = {},
+        lualine_y = {
+          'progress',
+          {
+            'searchcount',
+            maxcount = 999,
+            timeout = 500,
+          },
+        },
+        lualine_z = {
+          'location',
+          {
+            function()
+              return os.date '%R' -- Show current time
+            end,
+            color = { fg = '#ffffff', gui = 'bold' },
+          },
+        },
       },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { "filename" },
-        -- lualine_x = { "location" },
-        lualine_y = {},
-        lualine_z = {},
-      },
-      tabline = {},
-      extensions = { "neo-tree", "lazy" },
-    })
+    }
   end,
 }

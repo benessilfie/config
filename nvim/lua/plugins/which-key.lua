@@ -1,74 +1,50 @@
-return {
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  lazy = true,
+-- NOTE: Plugins can also be configured to run Lua code when they are loaded.
+--
+-- This is often very useful to both group configuration, as well as handle
+-- lazy loading plugins that don't need to be loaded immediately at startup.
+--
+-- For example, in the following configuration, we use:
+--  event = 'VimEnter'
+--
+-- which loads which-key before all the UI elements are loaded. Events can be
+-- normal autocommands events (`:help autocmd-events`).
+--
+-- Then, because we use the `opts` key (recommended), the configuration runs
+-- after the plugin has been loaded as `require(MODULE).setup(opts)`.
+
+return { -- Useful plugin to show you pending keybinds.
+  'folke/which-key.nvim',
+  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
   opts = {
-    plugins = {
-      marks = false,     -- shows a list of your marks on ' and `
-      registers = false, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-      spelling = {
-        enabled = true,
-        suggestions = 20,
-      },
-      -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-      -- No actual key bindings are created
-      presets = {
-        operators = false,    -- adds help for operators like d, y, ...
-        motions = false,      -- adds help for motions
-        text_objects = false, -- help for text objects triggered after entering an operator
-        windows = false,      -- default bindings on <c-w>
-        nav = false,          -- misc bindings to work with windows
-        z = false,            -- bindings for folds, spelling and others prefixed with z
-        g = false,            -- bindings for prefixed with g
-      },
-    },
-    operators = { gc = "Comments" }, -- show the currently pressed key and its label as a message in the command line
+    -- delay between pressing a key and opening which-key (milliseconds)
+    -- this setting is independent of vim.o.timeoutlen
+    delay = 400, -- 400ms second delay - adjust to your preference
     icons = {
-      breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-      separator = "➜", -- symbol used between a key and it's label
-      group = "+", -- symbol prepended to a group
+      -- set icon mappings to true if you have a Nerd Font
+      mappings = vim.g.have_nerd_font,
+      -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
+      -- default which-key.nvim defined Nerd Font icons, otherwise define a string table
+      keys = require('config.icons').which_key,
     },
-    popup_mappings = {
-      scroll_down = "<c-d>", -- binding to scroll down inside the popup
-      scroll_up = "<c-u>",   -- binding to scroll up inside the popup
-    },
-    window = {
-      border = "single",        -- none, single, double, shadow
-      position = "bottom",      -- bottom, top
-      margin = { 2, 0, 2, 0 },  -- extra window margin [top, right, bottom, left]
-      padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-      winblend = 0,
-      zindex = 1000,            -- positive value to position WhichKey above other floating windows.
-    },
-    layout = {
-      height = { min = 4, max = 25 },                                             -- min and max height of the columns
-      width = { min = 20, max = 50 },                                             -- min and max width of the columns
-      spacing = 3,                                                                -- spacing between columns
-      align = "left",                                                             -- align columns left, center or right
-    },
-    ignore_missing = false,                                                       -- enable this to hide mappings for which you didn't specify a label
-    hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-    show_help = true,                                                             -- show help message on the command line when the popup is visible
-    show_keys = true,
-    triggers = "auto",                                                            -- automatically setup triggers
-    triggers_blacklist = {
-      i = { "j", "k" },
-      v = { "j", "k" },
-    },
-    -- Disabled by default for Telescope
-    disable = {
-      buftypes = {},
-      filetypes = { "TelescopePrompt" },
+
+    -- Document existing key chains with proper organization
+    spec = {
+      -- Keep your sensible defaults for main groups
+      { '<leader>b', group = 'Buffers' },
+      { '<leader>d', group = 'Debug' },
+      { '<leader>f', group = 'Find' },
+      { '<leader>g', group = 'Git' },
+      { '<leader>l', group = 'LSP' },
+      { '<leader>m', group = 'Markdown' },
+      { '<leader>p', group = 'Panes' },
+      { '<leader>s', group = 'Search' },
+      { '<leader>t', group = 'Toggle' },
+      { '<leader>u', group = 'UI' },
+      { '<leader>x', group = 'Trouble' },
+      { '<leader>h', group = 'Git Hunk', mode = { 'v' } },
+
+      -- For the rest, we'll organize them as we identify them
+      -- Send me screenshots of the other groups and I'll help organize them properly
     },
   },
-  config = function(_, opts)
-    local which_key = require("which-key")
-    which_key.setup(opts)
-    which_key.register(require('config.which-key.defaults'), {
-      mode = "n",
-      prefix = "<leader>",
-    })
-
-    which_key.register(require('config.which-key.non_leader'))
-  end
 }
