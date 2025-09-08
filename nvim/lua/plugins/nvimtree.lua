@@ -44,6 +44,12 @@ return {
         end, opts 'Close Directory')
       end,
 
+      -- Auto-select current file when opening nvim-tree
+      update_focused_file = {
+        enable = true,
+        update_root = false,
+      },
+
       -- Only essential visual customizations
       view = {
         width = 30,
